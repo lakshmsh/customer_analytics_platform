@@ -1,0 +1,17 @@
+# Directory and artifact file paths
+paths:
+  root: "."
+  data:
+    raw: "data/raw"
+    interim: "data/interim"
+    processed: "data/processed"
+    external: "data/external"
+  models: "models"
+  mlruns: "mlruns"
+  reports:
+    figures: "reports/figures"
+    model_card: "reports/model_card.md"
+    business_impact: "reports/business_impact_summary.md"
+  docs: "docs"
+  monitoring: "monitoring"
+  configs: "configs"

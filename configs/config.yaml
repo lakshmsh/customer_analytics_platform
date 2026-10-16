@@ -1,0 +1,32 @@
+# Main project configuration
+project_name: customer_analytics_platform
+version: "1.0.0"
+environment: development
+random_seed: 42
+
+# Logging configuration
+logging:
+  level: INFO
+  format: "%(asctime)s | %(levelname)-8s | %(name)s:%(funcName)s:%(lineno)d - %(message)s"
+  log_file: monitoring/app.log
+
+# ETL and data validation settings
+data:
+  raw_telco_filename: telco_customer_churn.csv
+  raw_online_retail_filename: online_retail_II.xlsx
+  processed_customers_filename: customers_features.parquet
+  processed_transactions_filename: transactions_cleaned.parquet
+  time_series_daily_filename: daily_demand_revenue.parquet
+  
+  # Churn definition settings
+  churn:
+    inactivity_days_threshold: 90
+    observation_end_date: null  # Auto-inferred if null
+
+# Business ROI parameters
+business:
+  avg_intervention_cost_per_customer: 25.0
+  expected_retention_success_rate: 0.35
+  default_discount_offer_rate: 0.15
+  high_risk_threshold: 0.65
+  medium_risk_threshold: 0.35

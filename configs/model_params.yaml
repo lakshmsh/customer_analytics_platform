@@ -1,0 +1,45 @@
+# Model hyperparameters and training settings
+
+churn_model:
+  algorithm: "lightgbm"
+  params:
+    n_estimators: 200
+    learning_rate: 0.05
+    max_depth: 6
+    num_leaves: 31
+    subsample: 0.8
+    colsample_bytree: 0.8
+    class_weight: "balanced"
+    random_state: 42
+  cv_folds: 5
+  scoring_metric: "roc_auc"
+  calibration_method: "sigmoid"
+
+segmentation_model:
+  algorithm: "kmeans"
+  params:
+    n_clusters: 4
+    init: "k-means++"
+    n_init: 10
+    random_state: 42
+  features:
+    - "recency"
+    - "frequency"
+    - "monetary"
+    - "tenure_days"
+    - "avg_basket_value"
+
+recommender_model:
+  algorithm: "implicit_als"
+  factors: 32
+  regularization: 0.05
+  iterations: 20
+  top_k: 5
+  popular_fallback_k: 5
+
+forecast_model:
+  algorithm: "lightgbm_ts"
+  horizon_days: 30
+  lag_days: [1, 7, 14, 28]
+  rolling_windows: [7, 14, 30]
+  confidence_interval: 0.95
