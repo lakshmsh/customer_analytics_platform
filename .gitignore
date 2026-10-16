@@ -35,11 +35,13 @@ env/
 */.ipynb_checkpoints/*
 
 # Data files (track raw sample/scripts, ignore large generated files)
+data/raw/*
 data/interim/*
 data/processed/*
+data/external/*
+!data/raw/.gitkeep
 !data/interim/.gitkeep
 !data/processed/.gitkeep
-!data/raw/.gitkeep
 !data/external/.gitkeep
 
 # Models and runs
