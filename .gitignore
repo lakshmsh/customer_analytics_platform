@@ -52,6 +52,7 @@ models/*.onnx
 !models/.gitkeep
 mlruns/
 .mlflow/
+catboost_info/
 
 # Logs and monitoring
 *.log
