@@ -85,20 +85,41 @@ ACTION_PLAYBOOK = {
 
 
 class ChurnExplainer:
-    """SHAP Explainer for Churn Prediction with automated prescriptive recommendations."""
+    """SHAP Explainer for Churn Prediction with automated prescriptive recommendations.
+
+    Uses lazy initialization: all disk I/O (model loading, parquet reading, SHAP
+    explainer construction) is deferred to the first call of explain_customer().
+    This makes the class safe to instantiate in CI / test environments where model
+    artefacts and processed data may not be present on disk.
+    """
 
     def __init__(self):
+        # Attributes populated lazily via _ensure_initialized()
+        self.model = None
+        self.scaler = None
+        self.metadata = None
+        self.feature_names = None
+        self.base_estimator = None
+        self.explainer = None
+        self._initialized = False
+
+    def _ensure_initialized(self) -> None:
+        """Load model artefacts and build SHAP explainer on first use."""
+        if self._initialized:
+            return
+
         self.model, self.scaler, self.metadata = ModelRegistry.load_churn_model()
         self.feature_names = self.metadata["feature_cols"]
         self.base_estimator = self.model.calibrated_classifiers_[0].estimator
 
-        # Prepare background data for explainer
+        # Prepare background data for SHAP LinearExplainer
         df_processed = pd.read_parquet("data/processed/telco_processed.parquet")
         background_X = df_processed[self.feature_names].values[:200]
         if self.scaler is not None:
             background_X = self.scaler.transform(background_X)
 
         self.explainer = shap.LinearExplainer(self.base_estimator, background_X)
+        self._initialized = True
         logger.info("Initialized ChurnExplainer with SHAP LinearExplainer.")
 
     def explain_customer(
@@ -119,6 +140,7 @@ class ChurnExplainer:
         Returns:
             Dict[str, Any]: Full local explainability report with prescriptive actions.
         """
+        self._ensure_initialized()
         # Align features
         df_row = pd.DataFrame([customer_features])
         for col in self.feature_names:
@@ -200,6 +222,7 @@ class ChurnExplainer:
         save_waterfall_path: Optional[str | Path] = FIGURES_DIR / "08_shap_local_waterfall.png"
     ):
         """Generate and save global beeswarm/bar and local waterfall plots."""
+        self._ensure_initialized()
         logger.info("Generating global SHAP explanation plots...")
         df_processed = pd.read_parquet("data/processed/telco_processed.parquet")
         X = df_processed[self.feature_names].values[:500]
