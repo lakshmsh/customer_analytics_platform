@@ -34,21 +34,21 @@ env/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
-# Data files (track raw sample/scripts, ignore large generated files)
+# Data files (ignore large raw datasets, track processed feature stores for deployment)
 data/raw/*
 data/interim/*
-data/processed/*
 data/external/*
 !data/raw/.gitkeep
 !data/interim/.gitkeep
-!data/processed/.gitkeep
 !data/external/.gitkeep
+!data/processed/*.parquet
+!data/processed/.gitkeep
 
-# Models and runs
+# Models (track production serialized models and metadata)
 models/*.pkl
-models/*.joblib
-models/*.json
 models/*.onnx
+!models/*.joblib
+!models/*.json
 !models/.gitkeep
 mlruns/
 .mlflow/

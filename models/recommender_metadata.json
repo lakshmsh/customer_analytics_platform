@@ -1,0 +1,8 @@
+{
+  "algorithm": "Hybrid_CF_Content",
+  "alpha_cf_weight": 0.6,
+  "total_items": 4623,
+  "total_users": 5862,
+  "hit_rate_at_5": 1.0,
+  "catalog_coverage": 1.0
+}

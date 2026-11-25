@@ -1,0 +1,61 @@
+{
+  "horizon_days": 30,
+  "revenue_metrics": {
+    "mae": 7064.33,
+    "rmse": 9848.96,
+    "mape": 0.2082
+  },
+  "orders_metrics": {
+    "mae": 14.23,
+    "rmse": 17.93,
+    "mape": 0.1816
+  },
+  "revenue_feature_cols": [
+    "day_of_week",
+    "is_weekend",
+    "day_of_month",
+    "month",
+    "year",
+    "quarter",
+    "daily_revenue_lag_1",
+    "daily_revenue_lag_2",
+    "daily_revenue_lag_7",
+    "daily_revenue_lag_14",
+    "daily_revenue_lag_21",
+    "daily_revenue_lag_28",
+    "daily_revenue_roll_mean_7",
+    "daily_revenue_roll_std_7",
+    "daily_revenue_roll_mean_14",
+    "daily_revenue_roll_std_14",
+    "daily_revenue_roll_mean_30",
+    "daily_revenue_roll_std_30"
+  ],
+  "orders_feature_cols": [
+    "day_of_week",
+    "is_weekend",
+    "day_of_month",
+    "month",
+    "year",
+    "quarter",
+    "daily_orders_lag_1",
+    "daily_orders_lag_2",
+    "daily_orders_lag_7",
+    "daily_orders_lag_14",
+    "daily_orders_lag_21",
+    "daily_orders_lag_28",
+    "daily_orders_roll_mean_7",
+    "daily_orders_roll_std_7",
+    "daily_orders_roll_mean_14",
+    "daily_orders_roll_std_14",
+    "daily_orders_roll_mean_30",
+    "daily_orders_roll_std_30"
+  ],
+  "impact_scenario": {
+    "horizon_days": 30,
+    "projected_baseline_revenue": 1059184.46,
+    "unmitigated_churn_revenue_at_risk": 132398.06,
+    "estimated_revenue_saved": 46339.32,
+    "estimated_campaign_cost": 2500.0,
+    "estimated_net_roi": 43839.32
+  }
+}

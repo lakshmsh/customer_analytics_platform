@@ -1,0 +1,65 @@
+{
+  "algorithm": "KMeans",
+  "n_clusters": 4,
+  "features": [
+    "recency_days",
+    "frequency_orders",
+    "monetary_total",
+    "tenure_days",
+    "avg_basket_value",
+    "avg_basket_size"
+  ],
+  "metrics": {
+    "silhouette_score": 0.9287,
+    "davies_bouldin_score": 0.608,
+    "num_clusters": 4
+  },
+  "persona_mapping": {
+    "0": "Hibernating / Dormant",
+    "1": "Hibernating / Dormant",
+    "2": "Champions",
+    "3": "Potential Loyalists"
+  },
+  "cluster_profiles": [
+    {
+      "cluster_id": 0,
+      "size": 5819,
+      "recency_median": 96.0,
+      "frequency_median": 3.0,
+      "monetary_median": 842.04,
+      "avg_basket_median": 276.06,
+      "churn_rate": 0.5119436329266197,
+      "persona_name": "Hibernating / Dormant"
+    },
+    {
+      "cluster_id": 1,
+      "size": 2,
+      "recency_median": 535.0,
+      "frequency_median": 3.0,
+      "monetary_median": 22952.050000000003,
+      "avg_basket_median": 9342.744999999999,
+      "churn_rate": 1.0,
+      "persona_name": "Hibernating / Dormant"
+    },
+    {
+      "cluster_id": 2,
+      "size": 5,
+      "recency_median": 2.0,
+      "frequency_median": 145.0,
+      "monetary_median": 305259.17,
+      "avg_basket_median": 3632.77,
+      "churn_rate": 0.0,
+      "persona_name": "Champions"
+    },
+    {
+      "cluster_id": 3,
+      "size": 36,
+      "recency_median": 4.0,
+      "frequency_median": 60.5,
+      "monetary_median": 59472.100000000006,
+      "avg_basket_median": 1035.115,
+      "churn_rate": 0.16666666666666666,
+      "persona_name": "Potential Loyalists"
+    }
+  ]
+}

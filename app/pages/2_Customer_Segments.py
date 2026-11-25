@@ -67,6 +67,9 @@ PERSONA_PLAYBOOKS = {
         "discount_sensitivity": "High – test steep reactivation discounts on previous favorites."
     }
 }
+# Persona aliases for model mapping
+PERSONA_PLAYBOOKS["Champions"] = PERSONA_PLAYBOOKS["Champions / High-Value"]
+PERSONA_PLAYBOOKS["Potential Loyalists"] = PERSONA_PLAYBOOKS["Loyal Customers"]
 
 tab_profile, tab_dataset = st.tabs(["🎯 Persona Simulator & Radar", "📊 Full Segment Distribution"])
 
