@@ -87,20 +87,30 @@ else:
     for idx, item in enumerate(items):
         target_col = grid_cols[idx % 2]
         with target_col:
-            stock = item.get("stock_code", "PROD")
-            desc = item.get("description", "Product Title")
-            base_p = float(item.get("base_price", 10.0))
-            score = float(item.get("relevance_score", 0.85))
-            strat = item.get("strategy", "Hybrid").title()
+            stock = item.get("stock_code") or "PROD"
+            desc = item.get("description") or "Product Title"
+            try:
+                base_p = float(item.get("base_price") if item.get("base_price") is not None else 9.99)
+            except (ValueError, TypeError):
+                base_p = 9.99
+            try:
+                score = float(item.get("relevance_score") if item.get("relevance_score") is not None else 0.85)
+            except (ValueError, TypeError):
+                score = 0.85
+            strat = str(item.get("strategy") or "Hybrid").title()
             incentive = item.get("retention_incentive")
             disc_p = item.get("discounted_price")
 
             price_html = f"<span style='font-size: 1.15rem; font-weight: 700; color: #f1f5f9;'>£{base_p:.2f}</span>"
             if disc_p is not None:
-                price_html = f"""
-                <span style='text-decoration: line-through; color: #94a3b8; font-size: 0.95rem;'>£{base_p:.2f}</span>
-                <span style='font-size: 1.25rem; font-weight: 700; color: #10b981; margin-left: 8px;'>£{disc_p:.2f}</span>
-                """
+                try:
+                    disc_val = float(disc_p)
+                    price_html = f"""
+                    <span style='text-decoration: line-through; color: #94a3b8; font-size: 0.95rem;'>£{base_p:.2f}</span>
+                    <span style='font-size: 1.25rem; font-weight: 700; color: #10b981; margin-left: 8px;'>£{disc_val:.2f}</span>
+                    """
+                except (ValueError, TypeError):
+                    pass
 
             incentive_html = ""
             if incentive:

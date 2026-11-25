@@ -16,7 +16,7 @@ from src.utils.logger import get_logger
 
 logger = get_logger("app.api_client")
 
-API_BASE_URL = os.getenv("API_URL", "http://127.0.0.1:8000").rstrip("/")
+API_BASE_URL = os.getenv("API_URL", "").rstrip("/")
 REQUEST_TIMEOUT = 3.5  # seconds before falling back
 
 
@@ -28,6 +28,8 @@ class AnalyticsClient:
     @staticmethod
     def is_api_alive() -> bool:
         """Check if FastAPI backend is actively responding."""
+        if not API_BASE_URL:
+            return False
         try:
             resp = requests.get(f"{API_BASE_URL}/health", timeout=1.5)
             return resp.status_code == 200
@@ -37,12 +39,15 @@ class AnalyticsClient:
     @staticmethod
     def get_health() -> Dict[str, Any]:
         """Fetch system health check details."""
-        try:
-            resp = requests.get(f"{API_BASE_URL}/health", timeout=REQUEST_TIMEOUT)
-            if resp.status_code == 200:
-                data = resp.json()
-                data["source"] = "FastAPI Backend (Live)"
-                return data
+        if API_BASE_URL:
+            try:
+                resp = requests.get(f"{API_BASE_URL}/health", timeout=REQUEST_TIMEOUT)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    data["source"] = "FastAPI Backend (Live)"
+                    return data
+            except Exception as e:
+                logger.debug(f"API health check unreachable, using local status: {e}")
         except Exception as e:
             logger.debug(f"API health check unreachable, using local status: {e}")
 
@@ -81,14 +86,15 @@ class AnalyticsClient:
     @staticmethod
     def predict_churn(customer_data: Dict[str, Any]) -> Dict[str, Any]:
         """Score single customer churn risk."""
-        try:
-            resp = requests.post(f"{API_BASE_URL}/churn/predict", json=customer_data, timeout=REQUEST_TIMEOUT)
-            if resp.status_code == 200:
-                data = resp.json()
-                data["source"] = "FastAPI Backend"
-                return data
-        except Exception as e:
-            logger.debug(f"API churn call failed, falling back to local: {e}")
+        if API_BASE_URL:
+            try:
+                resp = requests.post(f"{API_BASE_URL}/churn/predict", json=customer_data, timeout=REQUEST_TIMEOUT)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    data["source"] = "FastAPI Backend"
+                    return data
+            except Exception as e:
+                logger.debug(f"API churn call failed, falling back to local: {e}")
 
         # Local fallback via ChurnExplainer / predict_churn
         from src.evaluation.explainability import ChurnExplainer
@@ -115,16 +121,17 @@ class AnalyticsClient:
     @staticmethod
     def predict_batch_churn(customers: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Score multiple customers in batch."""
-        try:
-            resp = requests.post(
-                f"{API_BASE_URL}/churn/batch",
-                json={"customers": customers},
-                timeout=REQUEST_TIMEOUT * 4
-            )
-            if resp.status_code == 200:
-                return resp.json()
-        except Exception as e:
-            logger.debug(f"API batch churn call failed, falling back to local: {e}")
+        if API_BASE_URL:
+            try:
+                resp = requests.post(
+                    f"{API_BASE_URL}/churn/batch",
+                    json={"customers": customers},
+                    timeout=REQUEST_TIMEOUT * 4
+                )
+                if resp.status_code == 200:
+                    return resp.json()
+            except Exception as e:
+                logger.debug(f"API batch churn call failed, falling back to local: {e}")
 
         # Local fallback
         predictions = []
@@ -152,14 +159,15 @@ class AnalyticsClient:
     @staticmethod
     def get_segment(rfm_data: Dict[str, Any]) -> Dict[str, Any]:
         """Assign behavioral persona from RFM metrics."""
-        try:
-            resp = requests.post(f"{API_BASE_URL}/segment/predict", json=rfm_data, timeout=REQUEST_TIMEOUT)
-            if resp.status_code == 200:
-                data = resp.json()
-                data["source"] = "FastAPI Backend"
-                return data
-        except Exception as e:
-            logger.debug(f"API segment call failed, falling back to local: {e}")
+        if API_BASE_URL:
+            try:
+                resp = requests.post(f"{API_BASE_URL}/segment/predict", json=rfm_data, timeout=REQUEST_TIMEOUT)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    data["source"] = "FastAPI Backend"
+                    return data
+            except Exception as e:
+                logger.debug(f"API segment call failed, falling back to local: {e}")
 
         # Local fallback
         from src.models.predict import predict_segment
@@ -175,15 +183,16 @@ class AnalyticsClient:
         is_churn_risk: bool = False
     ) -> Dict[str, Any]:
         """Fetch personalized recommendations."""
-        try:
-            params = {"n_items": n_items, "is_churn_risk": is_churn_risk}
-            resp = requests.get(f"{API_BASE_URL}/recommend/{customer_id}", params=params, timeout=REQUEST_TIMEOUT)
-            if resp.status_code == 200:
-                data = resp.json()
-                data["source"] = "FastAPI Backend"
-                return data
-        except Exception as e:
-            logger.debug(f"API recommendations failed, falling back to local: {e}")
+        if API_BASE_URL:
+            try:
+                params = {"n_items": n_items, "is_churn_risk": is_churn_risk}
+                resp = requests.get(f"{API_BASE_URL}/recommend/{customer_id}", params=params, timeout=REQUEST_TIMEOUT)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    data["source"] = "FastAPI Backend"
+                    return data
+            except Exception as e:
+                logger.debug(f"API recommendations failed, falling back to local: {e}")
 
         # Local fallback
         from src.models.predict import get_recommendations
@@ -199,14 +208,15 @@ class AnalyticsClient:
     @staticmethod
     def get_forecast(horizon_days: int = 30) -> Dict[str, Any]:
         """Fetch demand and revenue forward projections."""
-        try:
-            resp = requests.get(f"{API_BASE_URL}/forecast/revenue", params={"horizon_days": horizon_days}, timeout=REQUEST_TIMEOUT)
-            if resp.status_code == 200:
-                data = resp.json()
-                data["source"] = "FastAPI Backend"
-                return data
-        except Exception as e:
-            logger.debug(f"API forecast failed, falling back to local: {e}")
+        if API_BASE_URL:
+            try:
+                resp = requests.get(f"{API_BASE_URL}/forecast/revenue", params={"horizon_days": horizon_days}, timeout=REQUEST_TIMEOUT)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    data["source"] = "FastAPI Backend"
+                    return data
+            except Exception as e:
+                logger.debug(f"API forecast failed, falling back to local: {e}")
 
         # Local fallback
         from src.models.predict import predict_forecast
