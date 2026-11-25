@@ -10,8 +10,15 @@ frontend for the end-to-end Machine Learning system:
 5. Business Impact & SHAP Explainability Engine (Phase 6 / Bonus)
 """
 
-import streamlit as st
+import sys
 from pathlib import Path
+
+# Ensure project root is in sys.path so 'app' and 'src' modules resolve cleanly
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+import streamlit as st
 import pandas as pd
 
 from app.components.ui_elements import (

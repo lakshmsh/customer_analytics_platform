@@ -5,9 +5,16 @@ Provides 7-to-90-day time-series forecasting of incoming revenue and order volum
 and simulates the financial lift achieved by proactive churn-mitigation campaigns.
 """
 
+import sys
+from pathlib import Path
+
+# Ensure project root is in sys.path
+ROOT_DIR = Path(__file__).resolve().parents[2]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import streamlit as st
 import pandas as pd
-from pathlib import Path
 
 from app.components.ui_elements import (
     load_custom_css,

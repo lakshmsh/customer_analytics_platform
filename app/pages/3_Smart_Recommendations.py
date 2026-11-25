@@ -6,6 +6,14 @@ filtering with item-content TF-IDF similarity. Dynamically attaches targeted
 churn-mitigation discounts to retain high-risk customers.
 """
 
+import sys
+from pathlib import Path
+
+# Ensure project root is in sys.path
+ROOT_DIR = Path(__file__).resolve().parents[2]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import streamlit as st
 import pandas as pd
 

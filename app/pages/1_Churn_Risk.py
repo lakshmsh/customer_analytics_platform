@@ -5,6 +5,14 @@ Enables interactive scoring of single customer profiles with calibrated Platt Si
 probabilities and provides high-throughput batch scoring from CSV uploads.
 """
 
+import sys
+from pathlib import Path
+
+# Ensure project root is in sys.path
+ROOT_DIR = Path(__file__).resolve().parents[2]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import streamlit as st
 import pandas as pd
 import io
