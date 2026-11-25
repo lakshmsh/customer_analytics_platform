@@ -48,8 +48,6 @@ class AnalyticsClient:
                     return data
             except Exception as e:
                 logger.debug(f"API health check unreachable, using local status: {e}")
-        except Exception as e:
-            logger.debug(f"API health check unreachable, using local status: {e}")
 
         # Local fallback
         from src.models.registry import ModelRegistry
