@@ -115,8 +115,26 @@ if daily_path.exists():
     if "date" in df_daily.columns:
         df_daily["date"] = pd.to_datetime(df_daily["date"])
         df_daily = df_daily.sort_values("date")
-    st.line_chart(df_daily.set_index("date")["revenue"] if "revenue" in df_daily.columns else df_daily.head(100))
+
+    metric_options = [c for c in ["daily_revenue", "daily_orders", "daily_items_sold"] if c in df_daily.columns]
+    if metric_options:
+        sel_metric = st.selectbox(
+            "Select Historical Metric:",
+            options=metric_options,
+            format_func=lambda x: {
+                "daily_revenue": "Daily Revenue (£)",
+                "daily_orders": "Daily Distinct Orders",
+                "daily_items_sold": "Daily Items Sold Volume"
+            }.get(x, x),
+            key="hist_metric_select"
+        )
+        chart_data = df_daily.dropna(subset=["date", sel_metric]).set_index("date")[[sel_metric]]
+        st.line_chart(chart_data, y=sel_metric)
+    else:
+        num_cols = df_daily.select_dtypes(include=["number"]).columns.tolist()
+        if num_cols:
+            st.line_chart(df_daily.set_index("date")[[num_cols[0]]])
 else:
     trend_img = Path("reports/figures/05_daily_revenue_trend.png")
     if trend_img.exists():
-        st.image(str(trend_img), caption="Historical Daily Demand & Revenue Trend", use_container_width=True)
+        st.image(str(trend_img), caption="Historical Daily Demand & Revenue Trend")
