@@ -41,7 +41,10 @@ run-app:
 	streamlit run app/streamlit_app.py --server.port 8501
 
 docker-build:
-	docker-compose -f docker/docker-compose.yml build
+	docker compose build
 
 docker-up:
-	docker-compose -f docker/docker-compose.yml up -d
+	docker compose up -d
+
+docker-down:
+	docker compose down

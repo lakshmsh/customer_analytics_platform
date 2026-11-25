@@ -127,13 +127,50 @@ python scripts/train_all.py
 ```
 
 ### 3. Launch Applications
+
+#### Local Execution
 ```bash
-# Launch FastAPI Backend
+# Launch FastAPI Backend (Terminal 1)
 uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 
-# Launch Streamlit Dashboard
+# Launch Streamlit Dashboard (Terminal 2)
 streamlit run app/streamlit_app.py
 ```
+
+#### Containerized Execution via Docker
+Run both services (FastAPI + Streamlit) on an isolated bridge network with health checks:
+```bash
+# Build and start all containers in background
+docker compose up --build -d
+
+# Check live container health & logs
+docker compose ps
+docker compose logs -f
+
+# Stop containers
+docker compose down
+```
+- **Streamlit Dashboard**: `http://localhost:8501`
+- **FastAPI Interactive Docs**: `http://localhost:8000/docs`
+- **Health Check**: `http://localhost:8000/health`
+
+---
+
+## ☁️ Live Cloud Deployment Guide
+
+### Option 1: Render (Recommended Blueprint)
+1. Fork or push this repository to your GitHub account.
+2. Sign in to [Render](https://render.com) and click **New +** -> **Blueprint**.
+3. Connect your `customer_analytics_platform` repository.
+4. Render detects [`render.yaml`](render.yaml) and automatically provisions both the **FastAPI Service** and the **Streamlit Dashboard** on free cloud instances!
+
+### Option 2: Railway
+1. Sign in to [Railway](https://railway.app) and select **New Project** -> **Deploy from GitHub repo**.
+2. Select `customer_analytics_platform`. Railway automatically picks up the root [`Dockerfile`](Dockerfile) and sets up public HTTPS domains.
+
+### Option 3: Hugging Face Spaces
+1. Create a new Space at [huggingface.co/spaces](https://huggingface.co/spaces) with **Docker** SDK.
+2. Connect or push this repository — the root [`Dockerfile`](Dockerfile) automatically builds and serves your interactive dashboard for free with 16GB RAM!
 
 ---
 

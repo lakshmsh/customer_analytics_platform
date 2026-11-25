@@ -1,0 +1,27 @@
+# Version control & environments
+.git
+.gitignore
+.github
+venv
+env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.coverage
+htmlcov
+
+# Local caches & runs
+catboost_info
+mlruns
+.ipynb_checkpoints
+notebooks/*.ipynb
+
+# Large raw data (only processed feature sets needed in production)
+data/raw/
+data/external/
+
+# Development artifacts
+tests/
+scratch/

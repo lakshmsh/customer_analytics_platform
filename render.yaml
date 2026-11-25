@@ -1,0 +1,37 @@
+services:
+  # ---------------------------------------------------------------------------
+  # 1. FastAPI Serving Layer on Render
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: customer-analytics-api
+    runtime: docker
+    dockerfilePath: docker/Dockerfile.api
+    plan: free
+    region: oregon
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: PORT
+        value: 8000
+    healthCheckPath: /health
+
+  # ---------------------------------------------------------------------------
+  # 2. Streamlit Dashboard on Render
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: customer-analytics-dashboard
+    runtime: docker
+    dockerfilePath: docker/Dockerfile.streamlit
+    plan: free
+    region: oregon
+    envVars:
+      - key: API_URL
+        fromService:
+          type: web
+          name: customer-analytics-api
+          property: host
+      - key: STREAMLIT_SERVER_PORT
+        value: 8501
+      - key: STREAMLIT_SERVER_ADDRESS
+        value: 0.0.0.0
+    healthCheckPath: /_stcore/health
