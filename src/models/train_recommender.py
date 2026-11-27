@@ -13,7 +13,10 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
-import mlflow
+try:
+    import mlflow
+except ImportError:
+    mlflow = None
 from scipy.sparse import csr_matrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity

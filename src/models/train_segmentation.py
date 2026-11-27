@@ -11,7 +11,10 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
-import mlflow
+try:
+    import mlflow
+except ImportError:
+    mlflow = None
 from sklearn.cluster import KMeans
 from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import RobustScaler

@@ -12,7 +12,10 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
-import mlflow
+try:
+    import mlflow
+except ImportError:
+    mlflow = None
 from lightgbm import LGBMRegressor
 
 from src.evaluation.metrics import compute_forecast_metrics

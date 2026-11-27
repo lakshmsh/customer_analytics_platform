@@ -15,15 +15,24 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
-import optuna
-import mlflow
+try:
+    import optuna
+except ImportError:
+    optuna = None
+try:
+    import mlflow
+except ImportError:
+    mlflow = None
 from sklearn.model_selection import train_test_split, StratifiedKFold
 from sklearn.linear_model import LogisticRegression
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
-from catboost import CatBoostClassifier
+try:
+    from catboost import CatBoostClassifier
+except ImportError:
+    CatBoostClassifier = None
 
 from src.evaluation.metrics import compute_classification_metrics
 from src.features.encoding import encode_telco_features
