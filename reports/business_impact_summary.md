@@ -52,3 +52,9 @@ Using our multi-step LightGBM time series forecasters, forward projections indic
 1. **Prioritize VIP Tier Accounts**: 20% of customers generate 75%+ of revenue. Automated alerts should trigger immediate personal outreach for any VIP account whose calibrated churn risk crosses 35%.
 2. **Early Intervention Timing**: Trigger automated win-back workflows at day 45 of inactivity rather than waiting for day 90.
 3. **Migrate High-Risk Month-to-Month Subscribers**: Contractual lock-ins remain the single most potent defense against subscriber churn.
+
+---
+
+## 6. Live Decision Dashboard
+The executive team can test custom parameters, run real-time churn simulations, inspect local SHAP waterfall graphs, and compute expected net savings directly in the production dashboard:
+👉 **[Live Executive Dashboard](https://customeranalyticsplatform-5oimtazafkruj2cxdh4q8u.streamlit.app/Business_Impact)**

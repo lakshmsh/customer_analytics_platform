@@ -72,3 +72,11 @@
 ## 6. Caveats & Ethical Considerations
 - **Non-Stationarity**: Macroeconomic trends, new competitor pricing, or holiday anomalies can induce data drift. Monthly automated model retraining is scheduled.
 - **Demographic Impartiality**: Analysis confirms gender and partner status have near-zero SHAP weights ($|\text{SHAP}| < 0.01$), ensuring decisions are driven strictly by behavioral usage and service reliability rather than demographics.
+
+---
+
+## 7. Deployment & Runtime Specifications
+- **Model Storage**: Compact joblib serialization with float16 precision matrices (Hybrid Recommender compressed to 33.4 MB for sub-second cold starts).
+- **Inference Runtime**: Dual-mode serving layer supporting high-throughput FastAPI REST endpoints (`/docs`) and in-process execution for the Streamlit Community Cloud frontend.
+- **Live Production URL**: [customeranalyticsplatform-5oimtazafkruj2cxdh4q8u.streamlit.app](https://customeranalyticsplatform-5oimtazafkruj2cxdh4q8u.streamlit.app/)
+- **Monitoring & Drift**: PSI (Population Stability Index) and Kolmogorov-Smirnov test tracking for feature drift on inference inputs.
