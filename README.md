@@ -26,10 +26,10 @@ An enterprise-grade, end-to-end Machine Learning and Business Intelligence platf
 - **Bonus 2 — Deep Explainability via SHAP**:
   - Global feature importance and individual customer local waterfall explanations.
   - Translates complex ML decision boundaries into human-readable business reason codes.
-- **Bonus 4 — Actionable Retention Playbooks & Financial ROI Calculator**:
+- **Bonus 3 — Actionable Retention Playbooks & Financial ROI Calculator**:
   - Automated prescription matrix linking churn drivers to specific intervention playbooks.
   - Interactive ROI simulator estimating net revenue saved minus intervention costs.
-- **Bonus 5 — Interactive Streamlit Dashboard & Docker Deployment**:
+- **Bonus 4 — Interactive Streamlit Dashboard & Docker Deployment**:
   - Multi-page operational and executive dashboard with single-customer lookup, batch CSV scoring, and scenario simulators.
   - Multi-container Docker deployment (`docker-compose.yml`) for seamless reproducibility.
 
@@ -156,23 +156,6 @@ docker compose down
 
 ---
 
-## ☁️ Live Cloud Deployment Guide
-
-### Option 1: Render (Recommended Blueprint)
-1. Fork or push this repository to your GitHub account.
-2. Sign in to [Render](https://render.com) and click **New +** -> **Blueprint**.
-3. Connect your `customer_analytics_platform` repository.
-4. Render detects [`render.yaml`](render.yaml) and automatically provisions both the **FastAPI Service** and the **Streamlit Dashboard** on free cloud instances!
-
-### Option 2: Railway
-1. Sign in to [Railway](https://railway.app) and select **New Project** -> **Deploy from GitHub repo**.
-2. Select `customer_analytics_platform`. Railway automatically picks up the root [`Dockerfile`](Dockerfile) and sets up public HTTPS domains.
-
-### Option 3: Hugging Face Spaces
-1. Create a new Space at [huggingface.co/spaces](https://huggingface.co/spaces) with **Docker** SDK.
-2. Connect or push this repository — the root [`Dockerfile`](Dockerfile) automatically builds and serves your interactive dashboard for free with 16GB RAM!
-
----
 
 ## 📜 License
 Distributed under the MIT License. See [LICENSE](file:///C:/Users/laksh/OneDrive/Desktop/projects/customer_analytics_platform/LICENSE) for details.
